@@ -7,6 +7,11 @@ local map = vim.keymap.set
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
+-- GITHUB COPILOT
+map("n", "<Leader>co", "<cmd>CopilotChatOpen<CR>", { noremap = true, silent = true })
+map("n", "<Leader>cc", "<cmd>CopilotChatClose<CR>", { noremap = true, silent = true })
+-- GITHUB COPILOT
+
 -- GO TO IN CODE
 map("n", "gd", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
 map("n", "gD", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })

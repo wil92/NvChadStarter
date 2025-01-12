@@ -34,6 +34,7 @@ require "nvchad.autocmds"
 require "configs.formatter"
 -- require "configs.dap"
 require("dapui").setup()
+require("CopilotChat").setup()
 
 vim.schedule(function()
   require "mappings"
