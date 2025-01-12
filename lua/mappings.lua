@@ -13,7 +13,7 @@ map("n", "gD", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent
 -- GO TO IN CODE
 
 local function build_project()
-  local output = vim.fn.system "mkdir -p build;cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug;cmake --build build;"
+  local output = vim.fn.system "mkdir -p build;cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON;cp build/compile_commands.json compile_commands.json;cmake --build build;"
   vim.notify(output)
 
   return output:match "(%S+)%s*$"
