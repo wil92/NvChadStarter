@@ -18,7 +18,8 @@ map("n", "gD", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent
 -- GO TO IN CODE
 
 local function build_project()
-  local output = vim.fn.system "mkdir -p build;cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON;cp build/compile_commands.json compile_commands.json;cmake --build build;"
+  local output =
+    vim.fn.system "mkdir -p build;cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON;cp build/compile_commands.json compile_commands.json;cmake --build build;"
   vim.notify(output)
 
   return output:match "(%S+)%s*$"
@@ -28,13 +29,30 @@ end
 map("n", "<F8>", function()
   build_project()
 end, { noremap = true, silent = false, desc = "Build project" })
+map("n", "<F6>", function()
+  local scandir = vim.loop.fs_scandir("shaders")
+  if scandir then
+    while true do
+      local name, type = vim.loop.fs_scandir_next(scandir)
+      if not name then
+        break
+      end
+      local ext = ".glsl"
+      vim.notify(name)
+      if type == "file" and name:sub(-#ext) then
+        local command = "sokol-shdc --input shaders/" .. name .. " --output shaders/" .. name .. ".h --slang glsl430"
+        vim.notify(vim.fn.system(command))
+      end
+    end
+  end
+end, { noremap = true, silent = false, desc = "Build shaders" })
 -- BUILD PROJECT
 
 -- EXECUTE PROJECT
 map("n", "<F5>", function()
   local project_name = build_project()
   vim.notify(vim.fn.system("./build/" .. project_name))
-end, { noremap = true, silent = false, desc = "Build project" })
+end, { noremap = true, silent = false, desc = "Execute project" })
 -- EXECUTE PROJECT
 
 -- DEBUG
