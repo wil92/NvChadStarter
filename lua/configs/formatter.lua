@@ -21,5 +21,13 @@ require("formatter").setup {
         }
       end,
     },
+    glsl = {
+      function()
+        return {
+          exe = "glsl_analyzer",
+          stdin = true,
+        }
+      end,
+    },
   },
 }

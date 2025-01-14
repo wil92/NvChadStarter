@@ -39,7 +39,7 @@ map("n", "<F6>", function()
       end
       local ext = ".glsl"
       vim.notify(name)
-      if type == "file" and name:sub(-#ext) then
+      if type == "file" and name:sub(-#ext) == ext then
         local command = "sokol-shdc --input shaders/" .. name .. " --output shaders/" .. name .. ".h --slang glsl430"
         vim.notify(vim.fn.system(command))
       end
@@ -57,7 +57,6 @@ end, { noremap = true, silent = false, desc = "Execute project" })
 
 -- DEBUG
 map("n", "<F9>", "<cmd>lua require'dap'.continue()<CR>", { silent = true, desc = "Continue debug" })
--- map('n', '<F9>', function() require('dap').continue() end)
 map("n", "<F7>", function()
   require("dap").step_over()
 end)
@@ -66,6 +65,7 @@ end)
 map("n", "<Leader>b", function()
   require("dap").toggle_breakpoint()
 end, { desc = "Breakpoint" })
+map("n", "<Leader>dc", "<cmd>lua require'dapui'.close()<CR>", { desc = "Close debug UI", silent = false })
 -- map("n", "<Leader>B", function() require("dap").set_breakpoint() end)
 -- map('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
 -- map('n', '<Leader>dr', function() require('dap').repl.open() end)

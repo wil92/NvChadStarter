@@ -33,7 +33,8 @@ dofile(vim.g.base46_cache .. "statusline")
 require "options"
 require "nvchad.autocmds"
 require "configs.formatter"
--- require "configs.dap"
+require "configs.dap"
+
 require("dapui").setup()
 require("CopilotChat").setup()
 
